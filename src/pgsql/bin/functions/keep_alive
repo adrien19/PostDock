@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+echo ">>> Keep container alive..."
+
+set -e 
+
+ELAPSED=0 
+started=$(mktemp)
+echo "False" > $started
+until [ -f /tmp/repmgrd.pid ] && echo "True" > $started || [ $ELAPSED -eq 10 ]; do 
+    sleep 1
+    (( ELAPSED++ ))
+done
+
+if [[ $(cat $started) == "True" ]]; then 
+    echo ">>> repmgrd started after $ELAPSED seconds"
+else
+    echo ">>> FAILED: repmgrd start timed out after $ELAPSED seconds"
+fi
+
+POSTGRES_PID=`cat $PGDATA/postmaster.pid | head -1`
+REPMGRD_PID=`cat /tmp/repmgrd.pid | head -1`
+
+echo ">>> REPMGRD_PID=$REPMGRD_PID"
+
+# Add more pids that container can wait on -- format is PIDS="<first_pid> <second_pid> ..."
+PIDS="$REPMGRD_PID"
+
+for pid in $PIDS; do
+    tail --pid="$pid" -f /dev/null 
+done
+
+exit 0
+echo ">>> Main process terminated, container will shutdown..."

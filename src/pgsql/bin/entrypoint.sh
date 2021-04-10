@@ -10,7 +10,9 @@ echo '>>> STARTING SSH (if required)...'
 sshd_start
 
 echo '>>> STARTING POSTGRES...'
-/usr/local/bin/cluster/postgres/entrypoint.sh & wait ${!}
+/usr/local/bin/cluster/postgres/entrypoint.sh
+
+/usr/local/bin/cluster/functions/keep_alive
 
 EXIT_CODE=$?
 echo ">>> Foreground processes returned code: '$EXIT_CODE'"
