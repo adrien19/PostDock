@@ -1,9 +1,9 @@
 echo ">>> Making docker-compose"
 
 FILE_FROM='./src/includes/docker-compose/docker-compose.yml'
-for POSTGRES_VERSION in 9.5 9.6 10 11; do
+for POSTGRES_VERSION in 9.5 9.6 10 11 12; do
     for POSTGRES_EXTENDED in '' '1'; do
-        for REPMGR_VERSION in 3.2 4.0; do
+        for REPMGR_VERSION in 3.2 4.0 5.2.0; do
             for PGPOOL_VERSION in 3.3 3.6 3.7; do
                 for BARMAN_VERSION in 2.3 2.4; do
                     # postgres 11 and repmgr 3.2 are not compatible
