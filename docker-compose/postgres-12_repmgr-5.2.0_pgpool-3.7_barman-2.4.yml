@@ -36,7 +36,7 @@ services:
             POSTGRES_DB: monkey_db
             CLEAN_OVER_REWIND: 0
             CONFIGS_DELIMITER_SYMBOL: ;
-            CONFIGS: "listen_addresses:'*';max_replication_slots:5;wal_log_hints:on"
+            CONFIGS: "listen_addresses:'*';wal_log_hints:on;max_replication_slots:5"
                                   # in format variable1:value1[,variable2:value2[,...]] if CONFIGS_DELIMITER_SYMBOL=, and CONFIGS_ASSIGNMENT_SYMBOL=:
                                   # used for pgpool.conf file
             #defaults:
