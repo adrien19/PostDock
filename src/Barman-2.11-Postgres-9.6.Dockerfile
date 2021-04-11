@@ -18,10 +18,10 @@ RUN  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key a
      apt-get update && \
      apt-get install -y libffi-dev libssl-dev openssh-server
 
-RUN  apt-get install -y postgresql-client-11
+RUN  apt-get install -y postgresql-client-9.6
 
 
-RUN install_deb_pkg "http://atalia.postgresql.org/morgue/barman_2.4-1.pgdg90+1_all.deb"
+RUN install_deb_pkg "http://atalia.postgresql.org/morgue/barman_2.11-1.pgdg90+1_all.deb"
 
 RUN apt-get -y install cron
 ADD barman/crontab /etc/cron.d/barman
