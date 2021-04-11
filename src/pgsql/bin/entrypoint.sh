@@ -17,9 +17,5 @@ echo '>>> STARTING POSTGRES...'
 EXIT_CODE=$?
 echo ">>> Foreground processes returned code: '$EXIT_CODE'"
 
-while [ -f /var/run/recovery.lock ]; do
-    sleep 1;
-done;
-
 system_exit
 exit $EXIT_CODE

@@ -18,17 +18,11 @@ else
     echo ">>> FAILED: repmgrd start timed out after $ELAPSED seconds"
 fi
 
-POSTGRES_PID=`cat $PGDATA/postmaster.pid | head -1`
-REPMGRD_PID=`cat /tmp/repmgrd.pid | head -1`
+echo ">>> REPMGRD_PID=`cat /tmp/repmgrd.pid | head -1`"
 
-echo ">>> REPMGRD_PID=$REPMGRD_PID"
-
-# Add more pids that container can wait on -- format is PIDS="<first_pid> <second_pid> ..."
-PIDS="$REPMGRD_PID"
-
-for pid in $PIDS; do
-    tail --pid="$pid" -f /dev/null 
+while [[ `pidof repmgrd` != '' ]] || [[ -f /var/run/recovery.lock ]] ; do
+    sleep 5
 done
 
-exit 0
 echo ">>> Main process terminated, container will shutdown..."
+exit 0
